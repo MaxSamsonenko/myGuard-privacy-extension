@@ -1,0 +1,56 @@
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
+}
+
+/* App.css */
+
+.popup {
+	width: 300px;
+	padding: 16px;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #fff;
+	color: #222;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 12px;
+	color: #ff0420;
+}
+
+.status {
+	font-size: 14px;
+	margin-bottom: 8px;
+	font-weight: 500;
+}
+
+.loading {
+	color: #555;
+	font-style: italic;
+}
+
+.safe {
+	color: green;
+	font-weight: bold;
+}
+
+.danger {
+	color: #d70000;
+	font-weight: bold;
+	margin-bottom: 6px;
+}
+
+ul {
+	padding-left: 20px;
+	font-size: 13px;
+}
+
+li {
+	margin-bottom: 4px;
+}
