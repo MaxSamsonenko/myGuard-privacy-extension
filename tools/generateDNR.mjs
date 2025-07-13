@@ -46,4 +46,4 @@ for (const categoryName in categories) {
 
 await fs.writeFile(outputPath, JSON.stringify(rules, null, 2), "utf-8");
 
-console.log(`✅ Створено ruleset.json з ${rules.length} правилами.`);
+console.log(`Створено ruleset.json з ${rules.length} правилами.`);

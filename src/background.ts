@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener(
 				allResults[payload.url] = payload;
 
 				chrome.storage.local.set({ scanResultsBySite: allResults }, () => {
-					console.log("[myGuard] ✅ Scan saved for site:", payload.url);
+					console.log("[myGuard] Scan saved for site:", payload.url);
 				});
 			});
 		}
@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener(
 
 		if (message.type === "CLEAR_BADGE") {
 			chrome.action.setBadgeText({ text: "" });
-			console.log("[myGuard] ✅ Badge cleared");
+			console.log("[myGuard] Badge cleared");
 		}
 
 		return true;

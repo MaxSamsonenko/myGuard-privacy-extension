@@ -96,12 +96,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	container.parentElement?.insertBefore(clearBtn, container);
 
-	// Перше завантаження
 	chrome.storage.local.get("scanResultsBySite", (data) => {
 		renderScanResults(data.scanResultsBySite || {}, container);
 	});
 
-	// Live-оновлення
 	chrome.storage.onChanged.addListener((changes, areaName) => {
 		if (areaName === "local" && changes.scanResultsBySite) {
 			const newValue = changes.scanResultsBySite.newValue || {};

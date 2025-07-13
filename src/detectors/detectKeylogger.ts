@@ -10,7 +10,6 @@ export async function detectKeyLoggers(): Promise<Threat[]> {
 		}
 	};
 
-	// Proxy addEventListener
 	const originalAddEventListener = EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener = function (type, listener, options) {
 		if (["keydown", "keypress", "keyup"].includes(type)) {
@@ -41,7 +40,7 @@ export async function detectKeyLoggers(): Promise<Threat[]> {
 
 	if (detectedType.length > 0) {
 		threats.push({
-			message: "🛑 Виявлено підозру на кейлогер (прослуховування клавіш)",
+			message: "Виявлено підозру на кейлогер (прослуховування клавіш)",
 			html: `Сторінка слухає події: ${detectedType.join(", ")}`,
 		});
 	}

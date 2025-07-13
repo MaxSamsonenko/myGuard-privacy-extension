@@ -16,8 +16,8 @@ export function showPopup(result: { threats: any[] }) {
 
 	const text = document.createElement("p");
 	text.textContent = isSafe
-		? "✅ Загроз не виявлено"
-		: `⚠️ Виявлено ${result.threats.length} загроз(и)`;
+		? "Загроз не виявлено"
+		: `Виявлено ${result.threats.length} загроз(и)`;
 	text.style.color = isSafe ? "green" : "red";
 	text.style.margin = "0 0 8px 0";
 

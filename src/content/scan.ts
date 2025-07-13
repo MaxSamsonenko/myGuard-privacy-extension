@@ -28,7 +28,7 @@ export async function scanPage(): Promise<ScanResult> {
 		const isFormSecure =
 			(action && action.startsWith("https")) || (!action && isSiteSecure);
 
-		// Загроза — незахищена форма з чутливими полями
+		// незахищена форма з чутливими полями
 		if (!isFormSecure && inputs.length > 0) {
 			threats.push({
 				message: "Форма з чутливими даними без HTTPS-захисту",
@@ -36,7 +36,7 @@ export async function scanPage(): Promise<ScanResult> {
 			});
 		}
 
-		// Підозрілі поля — об'єднано в один загальний запис
+		// Підозрілі поля
 		const suspiciousInputs = form.querySelectorAll(
 			'input[name*="token"], input[name*="ssn"], input[name*="id"], input[name*="card"]'
 		);
@@ -44,7 +44,7 @@ export async function scanPage(): Promise<ScanResult> {
 			suspiciousFormsCount++;
 		}
 
-		// Форма має підозрілу логіку відправки
+		// підозріла логіка відправки форми
 		const onSubmit = form.getAttribute("onsubmit");
 		if (onSubmit && /fetch|XMLHttpRequest/.test(onSubmit)) {
 			threats.push({
@@ -61,7 +61,7 @@ export async function scanPage(): Promise<ScanResult> {
 		});
 	}
 
-	// Перевірка домену на фішинг (Levenshtein)
+	// (Levenshtein)
 	const knownDomains = [
 		"facebook.com",
 		"google.com",
@@ -81,7 +81,7 @@ export async function scanPage(): Promise<ScanResult> {
 		const distance = levenshtein(hostname, known);
 		if (distance > 0 && distance <= 2) {
 			threats.push({
-				message: `⚠️ Потенційно фішинговий домен: схожий на ${known}`,
+				message: `Потенційно фішинговий домен: схожий на ${known}`,
 				html: `Поточний домен: ${hostname}`,
 			});
 		}
@@ -101,7 +101,6 @@ export async function scanPage(): Promise<ScanResult> {
 
 	const fingerprintingThreats = detectFingerprinting();
 	console.log("fingerprintingThreats:", fingerprintingThreats);
-	// console.trace("🔍 Fingerprinting triggered by:", methodName);
 	threats.push(...fingerprintingThreats);
 
 	const keyloggerThreats = await detectKeyLoggers();

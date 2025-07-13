@@ -3,7 +3,6 @@ import type { Threat } from "../content/types";
 export function detectDomHarvesting(): Threat[] {
 	const threats: Threat[] = [];
 
-	// 🔍 Збираємо весь inline JavaScript
 	const inlineScripts = Array.from(
 		document.querySelectorAll("script:not([src])")
 	);
@@ -14,7 +13,6 @@ export function detectDomHarvesting(): Threat[] {
 		let readFlags = 0;
 		let sendFlags = 0;
 
-		// 🧠 Підозра на зчитування DOM
 		if (
 			content.includes("input.value") ||
 			content.includes(".value") ||
@@ -26,7 +24,6 @@ export function detectDomHarvesting(): Threat[] {
 			readFlags++;
 		}
 
-		// 📤 Підозра на передачу даних
 		if (
 			content.includes("fetch(") ||
 			content.includes("xmlhttprequest") ||
@@ -37,10 +34,9 @@ export function detectDomHarvesting(): Threat[] {
 			sendFlags++;
 		}
 
-		// Якщо є і читання, і передача — підозра на harvesting
 		if (readFlags > 0 && sendFlags > 0) {
 			threats.push({
-				message: `⚠️ Виявлено можливе DOM-зчитування та відправку даних (скрипт №${
+				message: `Виявлено можливе DOM-зчитування та відправку даних (скрипт №${
 					index + 1
 				})`,
 				html: script.textContent?.slice(0, 300) + "...",

@@ -16,7 +16,7 @@ function isSuspiciousUrl(url: string): boolean {
 export function detectAIAssistants(): Threat[] {
 	const threats: Threat[] = [];
 
-	// Перехоплення fetch
+	//fetch
 	if ((window as any).fetch) {
 		const originalFetch = window.fetch;
 		(window as any).fetch = function (...args: any[]) {
@@ -28,7 +28,7 @@ export function detectAIAssistants(): Threat[] {
 						: JSON.stringify(options?.body || "");
 				if (isSuspiciousUrl(url) && body.length > 100) {
 					threats.push({
-						message: "⚠️ Виявлено передачу великих даних через fetch",
+						message: "Виявлено передачу великих даних через fetch",
 						html: `fetch('${url}', {...})`,
 					});
 				}
@@ -37,7 +37,7 @@ export function detectAIAssistants(): Threat[] {
 		};
 	}
 
-	// Перехоплення XMLHttpRequest
+	//XMLHttpRequest
 	const originalSend = XMLHttpRequest.prototype.send;
 	XMLHttpRequest.prototype.send = function (body) {
 		try {
@@ -48,7 +48,7 @@ export function detectAIAssistants(): Threat[] {
 				body.length > 100
 			) {
 				threats.push({
-					message: "⚠️ Виявлено передачу великих даних через XMLHttpRequest",
+					message: "Виявлено передачу великих даних через XMLHttpRequest",
 					html: `xhr.send(...) to ${url}`,
 				});
 			}
@@ -56,14 +56,14 @@ export function detectAIAssistants(): Threat[] {
 		return originalSend.call(this, body);
 	};
 
-	// Перехоплення sendBeacon
+	//sendBeacon
 	const originalBeacon = navigator.sendBeacon;
 	navigator.sendBeacon = function (url: string, data?: BodyInit | null) {
 		try {
 			const body = typeof data === "string" ? data : "";
 			if (isSuspiciousUrl(url) && body.length > 100) {
 				threats.push({
-					message: "⚠️ sendBeacon відправляє великі дані до AI-домену",
+					message: "sendBeacon відправляє великі дані до AI-домену",
 					html: `navigator.sendBeacon('${url}', ...)`,
 				});
 			}
@@ -71,7 +71,7 @@ export function detectAIAssistants(): Threat[] {
 		return originalBeacon.call(this, url, data);
 	};
 
-	// Перехоплення WebSocket
+	//WebSocket
 	const originalWebSocket = window.WebSocket;
 	(window as any).WebSocket = function (
 		url: string,
@@ -83,7 +83,7 @@ export function detectAIAssistants(): Threat[] {
 
 		if (isSuspiciousUrl(url)) {
 			threats.push({
-				message: "⚠️ Встановлено WebSocket-зʼєднання з AI-доменом",
+				message: "Встановлено WebSocket-зʼєднання з AI-доменом",
 				html: `new WebSocket("${url}")`,
 			});
 		}
@@ -91,12 +91,12 @@ export function detectAIAssistants(): Threat[] {
 		return socket;
 	};
 
-	// iframe-перевірка
+	// iframe
 	document.querySelectorAll("iframe").forEach((iframe) => {
 		const src = iframe.getAttribute("src") || "";
 		if (isSuspiciousUrl(src)) {
 			threats.push({
-				message: "⚠️ Виявлено iframe з AI-домену",
+				message: "Виявлено iframe з AI-домену",
 				html: iframe.outerHTML.slice(0, 200) + "...",
 			});
 		}
