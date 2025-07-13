@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>AI Assistant Test</title>
+	</head>
+	<body>
+		<h1>Test AI Assistant Detection</h1>
+
+		<script>
+			fetch("https://api.openai.com/v1/completions", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ prompt: "Hello", max_tokens: 50 }),
+			});
+		</script>
+	</body>
+</html>

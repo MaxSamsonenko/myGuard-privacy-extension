@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Fingerprinting Test Page</title>
+	</head>
+	<body>
+		<h1>Fingerprinting Test</h1>
+
+		<!-- ✅ Canvas Fingerprinting -->
+		<script>
+			const canvas = document.createElement("canvas");
+			const canvasctx = canvas.getContext("2d");
+			canvasctx.fillText("myGuard test", 10, 50);
+			const data = canvas.toDataURL();
+			console.log("Canvas Fingerprint:", data);
+		</script>
+
+		<!-- ✅ Audio Fingerprinting -->
+		<script>
+			const ctx = new (window.AudioContext || window.webkitAudioContext)();
+			const osc = ctx.createOscillator();
+			osc.frequency.value = 440;
+			osc.connect(ctx.destination);
+			osc.start();
+			osc.stop(ctx.currentTime + 0.1);
+		</script>
+
+		<!-- ✅ WebGL Fingerprinting -->
+		<script>
+			const glCanvas = document.createElement("canvas");
+			const gl =
+				glCanvas.getContext("webgl") ||
+				glCanvas.getContext("experimental-webgl");
+			if (gl) {
+				const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+				if (debugInfo) {
+					const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+					console.log("WebGL Vendor:", vendor);
+				}
+			}
+		</script>
+	</body>
+</html>

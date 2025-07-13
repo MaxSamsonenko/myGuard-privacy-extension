@@ -1,0 +1,24 @@
+<!-- test-history-sniffing.html -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>History Sniffing Test</title>
+		<style>
+			a:visited {
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="https://google.com" target="_blank">Google</a>
+
+		<iframe src="about:blank" width="1" height="1"></iframe>
+
+		<script>
+			// Симуляція history sniffing
+			const link = document.querySelector("a");
+			const style = getComputedStyle(link);
+			console.log("Visited color:", style.color);
+		</script>
+	</body>
+</html>

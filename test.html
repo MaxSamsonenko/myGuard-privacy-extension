@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Input Test</title>
+	</head>
+	<body>
+		<h2>Test Field</h2>
+		<input type="text" id="input1" />
+
+		<script>
+			// 🔍 1. Прослуховування input
+			document.getElementById("input1").addEventListener("input", (e) => {
+				console.log("Input changed:", e.target.value);
+			});
+
+			// 🔍 2. Прямий доступ до .value
+			setTimeout(() => {
+				const val = document.getElementById("input1").value;
+				console.log("Read value:", val);
+			}, 1000);
+
+			// 🔍 3. Keylogger-підозра
+			document.getElementById("input1").onkeydown = (e) => {
+				console.log("Key down:", e.key);
+			};
+
+			document.onkeypress = (e) => {
+				console.log("Key press global:", e.key);
+			};
+
+			// 🔍 4. DOM-збір
+			setTimeout(() => {
+				const allText = document.body.innerText;
+				console.log("Collected text:", allText);
+			}, 1500);
+		</script>
+	</body>
+</html>
